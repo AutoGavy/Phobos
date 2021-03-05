@@ -74,6 +74,11 @@ DEFINE_HOOK(46920B, BulletClass_Detonate, 6)
 		}
 	}
 
+	if (pWHExt->CritChance) {
+		auto coords = *pCoordsDetonation;
+		pWHExt->ApplyCrit(coords, pThis->Owner);
+	}
+
 	return 0;
 }
 

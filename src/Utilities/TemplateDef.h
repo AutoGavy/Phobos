@@ -471,6 +471,42 @@ namespace detail {
 		return false;
 	}
 
+	template <>
+	inline bool read<WarheadTarget>(WarheadTarget& value, INI_EX& parser, const char* pSection, const char* pKey, bool allocate) {
+		if (parser.ReadString(pSection, pKey)) {
+			auto parsed = WarheadTarget::None;
+
+			auto str = parser.value();
+			char* context = nullptr;
+			for (auto cur = strtok_s(str, Phobos::readDelims, &context); cur; cur = strtok_s(nullptr, Phobos::readDelims, &context)) {
+				if (!_strcmpi(cur, "land")) {
+					parsed |= WarheadTarget::Land;
+				}
+				else if (!_strcmpi(cur, "water")) {
+					parsed |= WarheadTarget::Water;
+				}
+				else if (!_strcmpi(cur, "empty")) {
+					parsed |= WarheadTarget::NoContent;
+				}
+				else if (!_strcmpi(cur, "infantry")) {
+					parsed |= WarheadTarget::Infantry;
+				}
+				else if (!_strcmpi(cur, "units")) {
+					parsed |= WarheadTarget::Unit;
+				}
+				else if (!_strcmpi(cur, "buildings")) {
+					parsed |= WarheadTarget::Building;
+				}
+				else if (!_strcmpi(cur, "all")) {
+					parsed |= WarheadTarget::All;
+				}
+			}
+			value = parsed;
+			return true;
+		}
+		return false;
+	}
+
 	template <typename T>
 	void parse_values(std::vector<T>& vector, INI_EX& parser, const char* pSection, const char* pKey) {
 		char* context = nullptr;

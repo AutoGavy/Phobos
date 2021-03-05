@@ -2,12 +2,12 @@
 
 #include <CCINIClass.h>
 #include <WarheadTypeClass.h>
+#include <CellClass.h>
 
 #include "../_Container.hpp"
 #include "../../Phobos.h"
 
 #include "../../Utilities/Debug.h"
-
 #include "../../Utilities/TemplateDef.h"
 
 class WarheadTypeExt
@@ -18,6 +18,7 @@ public:
 	class ExtData final : public Extension<WarheadTypeClass>
 	{
 	public:
+
 		Valueable<bool> SpySat;
 		Valueable<bool> BigGap;
 		Valueable<int> TransactMoney;
@@ -26,6 +27,12 @@ public:
 		Valueable<bool> RemoveDisguise;
 		Valueable<bool> RemoveDisguise_AffectAllies;
 		Valueable<bool> RemoveDisguise_ApplyCellSpread;
+		Valueable<bool> AffectsEnemies;
+		Valueable<int> CritDamage;
+		Valueable<double> CritSpread;
+		Valueable<double> CritChance;
+		Valueable<WarheadTarget> CritAffects;
+		ValueableVector<AnimTypeClass*> CritAnims;
 
 		ExtData(WarheadTypeClass* OwnerObject) : Extension<WarheadTypeClass>(OwnerObject),
 			SpySat(false),
@@ -35,8 +42,17 @@ public:
 			SplashList_PickRandom(false),
 			RemoveDisguise(false),
 			RemoveDisguise_AffectAllies(false),
-			RemoveDisguise_ApplyCellSpread(true)
+			RemoveDisguise_ApplyCellSpread(true),
+			AffectsEnemies(true),
+			CritDamage(0),
+			CritSpread(0.0),
+			CritChance(0.0),
+			CritAffects(WarheadTarget::None),
+			CritAnims()
 		{ }
+
+		void ApplyCrit(const CoordStruct& coords, TechnoClass* const Owner);
+		bool IsCellEligible(CellClass* const pCell, WarheadTarget allowed) noexcept;
 
 		virtual void LoadFromINIFile(CCINIClass* pINI) override;
 		virtual ~ExtData() = default;
@@ -57,4 +73,5 @@ public:
 	};
 
 	static ExtContainer ExtMap;
+	static bool CanAffectTarget(TechnoClass* const pTarget, HouseClass* const pSourceHouse, WarheadTypeClass* const pWarhead);
 };

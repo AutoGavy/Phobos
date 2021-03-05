@@ -23,6 +23,7 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI) {
 	this->UIDescription.Read(exINI, pSection, "UIDescription");
 	this->LowSelectionPriority.Read(exINI, pSection, "LowSelectionPriority");
 	this->MindControlRangeLimit.Read(exINI, pSection, "MindControlRangeLimit");
+	this->ImmuneToCrit.Read(exINI, pSection, "ImmuneToCrit");
 
 	// Ares 0.A
 	this->GroupAs.Read(pINI, pSection, "GroupAs");
@@ -34,6 +35,7 @@ void TechnoTypeExt::ExtData::LoadFromStream(IStream* Stm) {
 	this->UIDescription.Load(Stm);
 	this->LowSelectionPriority.Load(Stm);
 	this->MindControlRangeLimit.Load(Stm);
+	this->ImmuneToCrit.Load(Stm);
 	PhobosStreamReader::Process(Stm, this->GroupAs);
 }
 
@@ -43,6 +45,7 @@ void TechnoTypeExt::ExtData::SaveToStream(IStream* Stm) const {
 	this->UIDescription.Save(Stm);
 	this->LowSelectionPriority.Save(Stm);
 	this->MindControlRangeLimit.Save(Stm);
+	this->ImmuneToCrit.Save(Stm);
 	PhobosStreamWriter::Process(Stm, this->GroupAs);
 }
 

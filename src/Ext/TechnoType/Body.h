@@ -18,13 +18,14 @@ public:
 	class ExtData final : public Extension<TechnoTypeClass>
 	{
 	public:
-		
+
 		Valueable<bool> Deployed_RememberTarget;
 		Valueable<bool> HealthBar_Hide;
 		Valueable<CSFText> UIDescription;
 		Valueable<bool> LowSelectionPriority;
 		PhobosFixedString<0x20> GroupAs;
 		Valueable<double> MindControlRangeLimit;
+		Valueable<bool> ImmuneToCrit;
 
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject),
 			Deployed_RememberTarget(false),
@@ -32,7 +33,8 @@ public:
 			UIDescription(),
 			LowSelectionPriority(false),
 			GroupAs(NONE_STR),
-			MindControlRangeLimit(-1.0)
+			MindControlRangeLimit(-1.0),
+			ImmuneToCrit(false)
 		{ }
 
 		virtual void LoadFromINIFile(CCINIClass* pINI) override;
