@@ -23,6 +23,9 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI) {
 	this->UIDescription.Read(exINI, pSection, "UIDescription");
 	this->LowSelectionPriority.Read(exINI, pSection, "LowSelectionPriority");
 	this->MindControlRangeLimit.Read(exINI, pSection, "MindControlRangeLimit");
+	this->Intercepter.Read(exINI, pSection, "Intercepter");
+	this->Intercepter_GuardRange.Read(exINI, pSection, "Intercepter.GuardRange");
+	this->Intercepter_EliteGuardRange.Read(exINI, pSection, "Intercepter.EliteGuardRange");
 	// Ares 0.A
 	this->GroupAs.Read(pINI, "GroupAs", this->GroupAs, this->GroupAs);
 }
@@ -33,6 +36,9 @@ void TechnoTypeExt::ExtData::LoadFromStream(IStream* Stm) {
 	this->UIDescription.Load(Stm);
 	this->LowSelectionPriority.Load(Stm);
 	this->MindControlRangeLimit.Load(Stm);
+	this->Intercepter.Load(Stm);
+	this->Intercepter_GuardRange.Load(Stm);
+	this->Intercepter_EliteGuardRange.Load(Stm);
 	PhobosStreamReader::Process(Stm, this->GroupAs);
 }
 
@@ -42,6 +48,9 @@ void TechnoTypeExt::ExtData::SaveToStream(IStream* Stm) const {
 	this->UIDescription.Save(Stm);
 	this->LowSelectionPriority.Save(Stm);
 	this->MindControlRangeLimit.Save(Stm);
+	this->Intercepter.Save(Stm);
+	this->Intercepter_GuardRange.Save(Stm);
+	this->Intercepter_EliteGuardRange.Save(Stm);
 	PhobosStreamWriter::Process(Stm, this->GroupAs);
 }
 
