@@ -16,7 +16,7 @@ void BulletTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI) {
 
 	INI_EX exINI(pINI);
 
-	this->Interceptable = pINI->ReadBool(pSection, "Interceptable", this->Interceptable);
+	this->Interceptable.Read(exINI, pSection, "Interceptable");
 }
 
 void BulletTypeExt::ExtData::LoadFromStream(IStream* Stm) {
