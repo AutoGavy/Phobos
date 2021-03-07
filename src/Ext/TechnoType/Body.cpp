@@ -26,6 +26,8 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI) {
 	this->Intercepter.Read(exINI, pSection, "Intercepter");
 	this->Intercepter_GuardRange.Read(exINI, pSection, "Intercepter.GuardRange");
 	this->Intercepter_EliteGuardRange.Read(exINI, pSection, "Intercepter.EliteGuardRange");
+
+
 	// Ares 0.A
 	this->GroupAs.Read(pINI, "GroupAs", this->GroupAs, this->GroupAs);
 }
