@@ -8,11 +8,11 @@ DEFINE_HOOK(6FF660, TechnoClass_FireBullet, 6)
 {
 	GET(TechnoClass* const, pSource, ESI);
 	GET_BASE(AbstractClass* const, pTarget, 0x8);
-	GET(WeaponTypeClass* const, pWeaponType, EBX);
+	//GET(WeaponTypeClass* const, pWeaponType, EBX);
 
-	// Intercepter
+	// Interceptor
 	auto const pSourceTypeExt = TechnoTypeExt::ExtMap.Find(pSource->GetTechnoType());
-	if (pSourceTypeExt->Intercepter) {
+	if (pSourceTypeExt->Interceptor) {
 		if (auto const pTargetObject = specific_cast<BulletClass* const>(pTarget))
 			if (auto const pSourceExt = TechnoExt::ExtMap.Find(pSource))
 				if (pSourceExt->InterceptedBullet && pSourceExt->InterceptedBullet->IsAlive) {

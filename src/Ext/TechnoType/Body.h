@@ -25,9 +25,9 @@ public:
 		Valueable<bool> LowSelectionPriority;
 		PhobosFixedString<0x20> GroupAs;
 		Valueable<double> MindControlRangeLimit;
-		Valueable<bool> Intercepter;
-		Valueable<double> Intercepter_GuardRange;
-		Valueable<double> Intercepter_EliteGuardRange;
+		Valueable<bool> Interceptor;
+		Valueable<double> Interceptor_GuardRange;
+		Valueable<double> Interceptor_EliteGuardRange;
 
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject),
 			Deployed_RememberTarget(false),
@@ -36,9 +36,9 @@ public:
 			LowSelectionPriority(false),
 			GroupAs(NONE_STR),
 			MindControlRangeLimit(-1.0),
-			Intercepter(false),
-			Intercepter_GuardRange(0.0),
-			Intercepter_EliteGuardRange(0.0)
+			Interceptor(false),
+			Interceptor_GuardRange(0.0),
+			Interceptor_EliteGuardRange(0.0)
 		{ }
 
 		virtual void LoadFromINIFile(CCINIClass* pINI) override;

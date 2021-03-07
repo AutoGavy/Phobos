@@ -73,10 +73,10 @@ DEFINE_HOOK(6F9E50, TechnoClass_Update, 5)
 		}
 	}
 
-	// Intercepter
+	// Interceptor
 	auto pData = TechnoExt::ExtMap.Find(pThis);
 	auto pTypeData = TechnoTypeExt::ExtMap.Find(pThis->GetTechnoType());
-	if (pTypeData->Intercepter && !pThis->Target)
+	if (pTypeData->Interceptor && !pThis->Target)
 	{
 		for (auto const& pBullet : *BulletClass::Array) {
 			if (auto pBulletTypeData = BulletTypeExt::ExtMap.Find(pBullet->Type)) {
@@ -85,13 +85,13 @@ DEFINE_HOOK(6F9E50, TechnoClass_Update, 5)
 			}
 
 			const double guardRange = pThis->Veterancy.IsElite() ?
-				pTypeData->Intercepter_EliteGuardRange * 256 : pTypeData->Intercepter_GuardRange * 256;
+				pTypeData->Interceptor_EliteGuardRange * 256 : pTypeData->Interceptor_GuardRange * 256;
 
 			if (pBullet->Location.DistanceFrom(pThis->Location) > guardRange)
 				continue;
 
 			if (pBullet->Location.DistanceFrom(pBullet->TargetCoords) >
-				double(ScenarioClass::Instance->Random.RandomRanged(128, guardRange / 10)) * 10)
+				double(ScenarioClass::Instance->Random.RandomRanged(128, (int)guardRange / 10)) * 10)
 				continue;
 
 			if (auto pTarget = abstract_cast<TechnoClass*>(pBullet->Target)) {
