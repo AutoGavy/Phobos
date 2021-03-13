@@ -15,11 +15,11 @@ WarheadTypeExt::ExtContainer WarheadTypeExt::ExtMap;
 void WarheadTypeExt::ExtData::ApplyCrit(const CoordStruct& coords, TechnoClass* const Owner)
 {
 	auto& random = ScenarioClass::Instance->Random;
-	if (random.RandomRanged(1, 10) / 10 >= this->CritChance)
+	if (this->Crit_Chance >= double(random.RandomRanged(1, 10) / 10))
 	{
 		auto const pWH = this->OwnerObject();
 
-		auto items = Helpers::Alex::getCellSpreadItems(coords, this->CritSpread, true);
+		auto items = Helpers::Alex::getCellSpreadItems(coords, this->Crit_Spread, true);
 		for (const auto curTechno : items) {
 			if (!curTechno || curTechno->InLimbo || !curTechno->IsAlive || !curTechno->Health) {
 				continue;
@@ -34,33 +34,59 @@ void WarheadTypeExt::ExtData::ApplyCrit(const CoordStruct& coords, TechnoClass* 
 				continue;
 			}
 
-			if (!IsCellEligible(curTechno->GetCell(), this->CritAffects)) {
+			if (!IsCellEligible(curTechno->GetCell(), this->Crit_Affects)) {
 				continue;
 			}
 
-			auto damage = this->CritDamage;
+			if (!IsTechnoEligible(curTechno, this->Crit_Affects)) {
+				continue;
+			}
+
+			auto damage = this->Crit_Damage;
 			curTechno->ReceiveDamage(&damage, 0, pWH, Owner, false, false, Owner->Owner);
 
-			if (this->CritAnims.size()) {
-				GameCreate<AnimClass>(this->CritAnims[
-					this->CritAnims.size() > 1 ?
-					random.RandomRanged(0, this->CritAnims.size() - 1) : 0],
+			if (this->Crit_Anims.size()) {
+				GameCreate<AnimClass>(this->Crit_Anims[
+					this->Crit_Anims.size() > 1 ?
+					random.RandomRanged(0, this->Crit_Anims.size() - 1) : 0],
 					curTechno->GetCoords());
 			}
 		}
 	}
 }
 
-bool WarheadTypeExt::ExtData::IsCellEligible(CellClass* const pCell, WarheadTarget allowed) noexcept
+bool WarheadTypeExt::ExtData::IsCellEligible(CellClass* const pCell, SuperWeaponTarget allowed) noexcept
 {
-	if (allowed & WarheadTarget::AllCells) {
+	if (allowed & SuperWeaponTarget::AllCells) {
 		if (pCell->LandType == LandType::Water) {
 			// check whether it supports water
-			return (allowed & WarheadTarget::Water) != WarheadTarget::None;
+			return (allowed & SuperWeaponTarget::Water) != SuperWeaponTarget::None;
 		}
 		else {
 			// check whether it supports non-water
-			return (allowed & WarheadTarget::Land) != WarheadTarget::None;
+			return (allowed & SuperWeaponTarget::Land) != SuperWeaponTarget::None;
+		}
+	}
+	return true;
+}
+
+bool WarheadTypeExt::ExtData::IsTechnoEligible(TechnoClass* const pTechno, SuperWeaponTarget allowed) noexcept
+{
+	if (allowed & SuperWeaponTarget::AllContents) {
+		if (pTechno) {
+			switch (pTechno->WhatAmI()) {
+			case AbstractType::Infantry:
+				return (allowed & SuperWeaponTarget::Infantry) != SuperWeaponTarget::None;
+			case AbstractType::Unit:
+			case AbstractType::Aircraft:
+				return (allowed & SuperWeaponTarget::Unit) != SuperWeaponTarget::None;
+			case AbstractType::Building:
+				return (allowed & SuperWeaponTarget::Building) != SuperWeaponTarget::None;
+			}
+		}
+		else {
+			// is the target cell allowed to be empty?
+			return (allowed & SuperWeaponTarget::NoContent) != SuperWeaponTarget::None;
 		}
 	}
 	return true;
@@ -104,11 +130,11 @@ void WarheadTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI) {
 	this->RemoveDisguise_AffectAllies.Read(exINI, pSection, "RemoveDisguise.AffectAllies");
 	this->RemoveDisguise_ApplyCellSpread.Read(exINI, pSection, "RemoveDisguise.ApplyCellSpread");
 	this->AffectsEnemies.Read(exINI, pSection, "AffectsEnemies");
-	this->CritDamage.Read(exINI, pSection, "CritDamage");
-	this->CritSpread.Read(exINI, pSection, "CritSpread");
-	this->CritChance.Read(exINI, pSection, "CritChance");
-	this->CritAffects.Read(exINI, pSection, "CritAffects");
-	this->CritAnims.Read(exINI, pSection, "CritAnims");
+	this->Crit_Damage.Read(exINI, pSection, "Crit.Damage");
+	this->Crit_Spread.Read(exINI, pSection, "Crit.Spread");
+	this->Crit_Chance.Read(exINI, pSection, "Crit.Chance");
+	this->Crit_Affects.Read(exINI, pSection, "Crit.Affects");
+	this->Crit_Anims.Read(exINI, pSection, "Crit.Anims");
 }
 
 void WarheadTypeExt::ExtData::LoadFromStream(IStream* Stm) {
@@ -121,11 +147,11 @@ void WarheadTypeExt::ExtData::LoadFromStream(IStream* Stm) {
 	this->RemoveDisguise_AffectAllies.Load(Stm);
 	this->RemoveDisguise_ApplyCellSpread.Load(Stm);
 	this->AffectsEnemies.Load(Stm);
-	this->CritDamage.Load(Stm);
-	this->CritSpread.Load(Stm);
-	this->CritChance.Load(Stm);
-	this->CritAffects.Load(Stm);
-	this->CritAnims.Load(Stm);
+	this->Crit_Damage.Load(Stm);
+	this->Crit_Spread.Load(Stm);
+	this->Crit_Chance.Load(Stm);
+	this->Crit_Affects.Load(Stm);
+	this->Crit_Anims.Load(Stm);
 }
 
 void WarheadTypeExt::ExtData::SaveToStream(IStream* Stm) const {
@@ -138,11 +164,11 @@ void WarheadTypeExt::ExtData::SaveToStream(IStream* Stm) const {
 	this->RemoveDisguise_AffectAllies.Save(Stm);
 	this->RemoveDisguise_ApplyCellSpread.Save(Stm);
 	this->AffectsEnemies.Save(Stm);
-	this->CritDamage.Save(Stm);
-	this->CritSpread.Save(Stm);
-	this->CritChance.Save(Stm);
-	this->CritAffects.Save(Stm);
-	this->CritAnims.Save(Stm);
+	this->Crit_Damage.Save(Stm);
+	this->Crit_Spread.Save(Stm);
+	this->Crit_Chance.Save(Stm);
+	this->Crit_Affects.Save(Stm);
+	this->Crit_Anims.Save(Stm);
 }
 
 // =============================

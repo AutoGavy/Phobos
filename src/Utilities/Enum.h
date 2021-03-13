@@ -119,23 +119,6 @@ enum class CanTargetFlags : unsigned int
 
 MAKE_ENUM_FLAGS(CanTargetFlags);
 
-enum class WarheadTarget : unsigned char {
-	None = 0x0,
-	Land = 0x1,
-	Water = 0x2,
-	NoContent = 0x4,
-	Infantry = 0x8,
-	Unit = 0x10,
-	Building = 0x20,
-
-	All = 0xFF,
-	AllCells = Land | Water,
-	AllTechnos = Infantry | Unit | Building,
-	AllContents = NoContent | AllTechnos
-};
-
-MAKE_ENUM_FLAGS(WarheadTarget);
-
 class MouseCursorHotSpotX {
 public:
 	typedef MouseHotSpotX Value;

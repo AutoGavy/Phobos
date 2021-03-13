@@ -28,11 +28,11 @@ public:
 		Valueable<bool> RemoveDisguise_AffectAllies;
 		Valueable<bool> RemoveDisguise_ApplyCellSpread;
 		Valueable<bool> AffectsEnemies;
-		Valueable<int> CritDamage;
-		Valueable<double> CritSpread;
-		Valueable<double> CritChance;
-		Valueable<WarheadTarget> CritAffects;
-		ValueableVector<AnimTypeClass*> CritAnims;
+		Valueable<int> Crit_Damage;
+		Valueable<double> Crit_Spread;
+		Valueable<double> Crit_Chance;
+		Valueable<SuperWeaponTarget> Crit_Affects;
+		ValueableVector<AnimTypeClass*> Crit_Anims;
 
 		ExtData(WarheadTypeClass* OwnerObject) : Extension<WarheadTypeClass>(OwnerObject),
 			SpySat(false),
@@ -44,15 +44,16 @@ public:
 			RemoveDisguise_AffectAllies(false),
 			RemoveDisguise_ApplyCellSpread(true),
 			AffectsEnemies(true),
-			CritDamage(0),
-			CritSpread(0.0),
-			CritChance(0.0),
-			CritAffects(WarheadTarget::None),
-			CritAnims()
+			Crit_Damage(0),
+			Crit_Spread(0.0),
+			Crit_Chance(0.0),
+			Crit_Affects(SuperWeaponTarget::None),
+			Crit_Anims()
 		{ }
 
 		void ApplyCrit(const CoordStruct& coords, TechnoClass* const Owner);
-		bool IsCellEligible(CellClass* const pCell, WarheadTarget allowed) noexcept;
+		bool IsCellEligible(CellClass* const pCell, SuperWeaponTarget allowed) noexcept;
+		bool IsTechnoEligible(TechnoClass* const pCell, SuperWeaponTarget allowed) noexcept;
 
 		virtual void LoadFromINIFile(CCINIClass* pINI) override;
 		virtual ~ExtData() = default;
