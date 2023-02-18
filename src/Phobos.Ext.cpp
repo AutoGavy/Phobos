@@ -2,34 +2,11 @@
 
 #include <LoadOptionsClass.h>
 
-#include <Ext/Aircraft/Body.h>
-#include <Ext/AnimType/Body.h>
-#include <Ext/Anim/Body.h>
-#include <Ext/Building/Body.h>
-#include <Ext/BuildingType/Body.h>
-#include <Ext/Bullet/Body.h>
-#include <Ext/BulletType/Body.h>
-#include <Ext/House/Body.h>
-#include <Ext/RadSite/Body.h>
 #include <Ext/Rules/Body.h>
-#include <Ext/Scenario/Body.h>
 #include <Ext/Script/Body.h>
-#include <Ext/Side/Body.h>
-#include <Ext/SWType/Body.h>
-#include <Ext/TAction/Body.h>
 #include <Ext/Team/Body.h>
 #include <Ext/Techno/Body.h>
 #include <Ext/TechnoType/Body.h>
-#include <Ext/TerrainType/Body.h>
-#include <Ext/Tiberium/Body.h>
-#include <Ext/VoxelAnim/Body.h>
-#include <Ext/VoxelAnimType/Body.h>
-#include <Ext/WarheadType/Body.h>
-#include <Ext/WeaponType/Body.h>
-
-#include <New/Type/RadTypeClass.h>
-#include <New/Type/LaserTrailTypeClass.h>
-
 #include <utility>
 
 #pragma region Implementation details
@@ -188,36 +165,11 @@ private:
 // Add more class names as you like
 using PhobosTypeRegistry = TypeRegistry<
 	// Ext classes
-	AircraftExt,
-	AnimTypeExt,
-	AnimExt,
-	BuildingExt,
-	BuildingTypeExt,
-	BulletExt,
-	BulletTypeExt,
-	HouseExt,
-	RadSiteExt,
 	RulesExt,
-	ScenarioExt,
 	ScriptExt,
-	SideExt,
-	SWTypeExt,
-	TActionExt,
 	TeamExt,
 	TechnoExt,
-	TechnoTypeExt,
-	TerrainTypeExt,
-	TiberiumExt,
-	VoxelAnimExt,
-	VoxelAnimTypeExt,
-	WarheadTypeExt,
-	WeaponTypeExt,
-	// New classes
-	ShieldTypeClass,
-	LaserTrailTypeClass,
-	RadTypeClass,
-	ShieldClass
-	// other classes
+	TechnoTypeExt
 >;
 
 DEFINE_HOOK(0x7258D0, AnnounceInvalidPointer, 0x6)

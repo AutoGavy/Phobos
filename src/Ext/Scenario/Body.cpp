@@ -1,7 +1,5 @@
 #include "Body.h"
 
-#include <SessionClass.h>
-
 template<> const DWORD Extension<ScenarioClass>::Canary = 0xABCD1595;
 std::unique_ptr<ScenarioExt::ExtData> ScenarioExt::Data = nullptr;
 
@@ -82,9 +80,6 @@ void ScenarioExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 	// auto pThis = this->OwnerObject();
 
 	// INI_EX exINI(pINI);
-
-
-
 }
 
 template <typename T>
@@ -93,9 +88,7 @@ void ScenarioExt::ExtData::Serialize(T& Stm)
 	Stm
 		.Process(this->Waypoints)
 		.Process(this->Variables[0])
-		.Process(this->Variables[1])
-		.Process(SessionClass::Instance->Config)
-		;
+		.Process(this->Variables[1]);
 }
 
 void ScenarioExt::ExtData::LoadFromStream(PhobosStreamReader& Stm)
@@ -120,11 +113,10 @@ bool ScenarioExt::SaveGlobals(PhobosStreamWriter& Stm)
 	return Stm.Success();
 }
 
-
 // =============================
 // container hooks
 
-DEFINE_HOOK(0x683549, ScenarioClass_CTOR, 0x9)
+DEFINE_HOOK(0x683549, ScenarioClass_CTOR, 9)
 {
 	GET(ScenarioClass*, pItem, EAX);
 
@@ -133,11 +125,10 @@ DEFINE_HOOK(0x683549, ScenarioClass_CTOR, 0x9)
 	ScenarioExt::Global()->Waypoints.clear();
 	ScenarioExt::Global()->Variables[0].clear();
 	ScenarioExt::Global()->Variables[1].clear();
-
 	return 0;
 }
 
-DEFINE_HOOK(0x6BEB7D, ScenarioClass_DTOR, 0x6)
+DEFINE_HOOK(0x6BEB7D, ScenarioClass_DTOR, 6)
 {
 	GET(ScenarioClass*, pItem, ESI);
 
@@ -147,17 +138,16 @@ DEFINE_HOOK(0x6BEB7D, ScenarioClass_DTOR, 0x6)
 
 IStream* ScenarioExt::g_pStm = nullptr;
 
-DEFINE_HOOK_AGAIN(0x689470, ScenarioClass_SaveLoad_Prefix, 0x5)
-DEFINE_HOOK(0x689310, ScenarioClass_SaveLoad_Prefix, 0x5)
+DEFINE_HOOK_AGAIN(0x689470, ScenarioClass_SaveLoad_Prefix, 5)
+DEFINE_HOOK(0x689310, ScenarioClass_SaveLoad_Prefix, 5)
 {
 	GET_STACK(IStream*, pStm, 0x4);
 
 	ScenarioExt::g_pStm = pStm;
-
 	return 0;
 }
 
-DEFINE_HOOK(0x689669, ScenarioClass_Load_Suffix, 0x6)
+DEFINE_HOOK(0x689669, ScenarioClass_Load_Suffix, 6)
 {
 	auto buffer = ScenarioExt::Global();
 
@@ -169,11 +159,10 @@ DEFINE_HOOK(0x689669, ScenarioClass_Load_Suffix, 0x6)
 		if (Reader.Expect(ScenarioExt::ExtData::Canary) && Reader.RegisterChange(buffer))
 			buffer->LoadFromStream(Reader);
 	}
-
 	return 0;
 }
 
-DEFINE_HOOK(0x68945B, ScenarioClass_Save_Suffix, 0x8)
+DEFINE_HOOK(0x68945B, ScenarioClass_Save_Suffix, 8)
 {
 	auto buffer = ScenarioExt::Global();
 	PhobosByteStream saver(sizeof(*buffer));
@@ -184,11 +173,10 @@ DEFINE_HOOK(0x68945B, ScenarioClass_Save_Suffix, 0x8)
 
 	buffer->SaveToStream(writer);
 	saver.WriteBlockToStream(ScenarioExt::g_pStm);
-
 	return 0;
 }
 
-DEFINE_HOOK(0x68AD62, ScenarioClass_LoadFromINI, 0x6)
+DEFINE_HOOK(0x68AD62, ScenarioClass_LoadFromINI, 6)
 {
 	GET(ScenarioClass*, pItem, ESI);
 	GET_STACK(CCINIClass*, pINI, STACK_OFFSET(0x38, 0x8));

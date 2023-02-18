@@ -1,12 +1,9 @@
 #include "Body.h"
-#include <Ext/Side/Body.h>
 #include <Utilities/TemplateDef.h>
+#include <Utilities/Macro.h>
 #include <FPSCounter.h>
 #include <GameOptionsClass.h>
 #include <GameStrings.h>
-#include <New/Type/RadTypeClass.h>
-#include <New/Type/ShieldTypeClass.h>
-#include <New/Type/LaserTrailTypeClass.h>
 
 template<> const DWORD Extension<RulesClass>::Canary = 0x12341234;
 std::unique_ptr<RulesExt::ExtData> RulesExt::Data = nullptr;
@@ -28,10 +25,6 @@ void RulesExt::LoadFromINIFile(RulesClass* pThis, CCINIClass* pINI)
 
 void RulesExt::LoadBeforeTypeData(RulesClass* pThis, CCINIClass* pINI)
 {
-	RadTypeClass::LoadFromINIList(pINI);
-	ShieldTypeClass::LoadFromINIList(pINI);
-	LaserTrailTypeClass::LoadFromINIList(&CCINIClass::INI_Art.get());
-
 	Data->LoadBeforeTypeData(pThis, pINI);
 }
 
@@ -65,53 +58,6 @@ void RulesExt::ExtData::LoadBeforeTypeData(RulesClass* pThis, CCINIClass* pINI)
 	const char* sectionAIScriptsList = "AIScriptsList";
 
 	INI_EX exINI(pINI);
-
-	this->Storage_TiberiumIndex.Read(exINI, GameStrings::General, "Storage.TiberiumIndex");
-	this->InfantryGainSelfHealCap.Read(exINI, GameStrings::General, "InfantryGainSelfHealCap");
-	this->UnitsGainSelfHealCap.Read(exINI, GameStrings::General, "UnitsGainSelfHealCap");
-	this->UseGlobalRadApplicationDelay.Read(exINI, GameStrings::Radiation, "UseGlobalRadApplicationDelay");
-	this->RadApplicationDelay_Building.Read(exINI, GameStrings::Radiation, "RadApplicationDelay.Building");
-	this->RadWarhead_Detonate.Read(exINI, GameStrings::Radiation, "RadSiteWarhead.Detonate");
-	this->RadHasOwner.Read(exINI, GameStrings::Radiation, "RadHasOwner");
-	this->RadHasInvoker.Read(exINI, GameStrings::Radiation, "RadHasInvoker");
-	this->MissingCameo.Read(pINI, GameStrings::AudioVisual, "MissingCameo");
-
-	this->PlacementPreview.Read(exINI, GameStrings::AudioVisual, "PlacementPreview");
-	this->PlacementPreview_Translucency.Read(exINI, GameStrings::AudioVisual, "PlacementPreview.Translucency");
-	this->PlacementGrid_Translucency.Read(exINI, GameStrings::AudioVisual, "PlacementGrid.Translucency");
-	this->Pips_Shield.Read(exINI, GameStrings::AudioVisual, "Pips.Shield");
-	this->Pips_Shield_Background.Read(exINI, GameStrings::AudioVisual, "Pips.Shield.Background");
-	this->Pips_Shield_Building.Read(exINI, GameStrings::AudioVisual, "Pips.Shield.Building");
-	this->Pips_Shield_Building_Empty.Read(exINI, GameStrings::AudioVisual, "Pips.Shield.Building.Empty");
-	this->Pips_SelfHeal_Infantry.Read(exINI, GameStrings::AudioVisual, "Pips.SelfHeal.Infantry");
-	this->Pips_SelfHeal_Units.Read(exINI, GameStrings::AudioVisual, "Pips.SelfHeal.Units");
-	this->Pips_SelfHeal_Buildings.Read(exINI, GameStrings::AudioVisual, "Pips.SelfHeal.Buildings");
-	this->Pips_SelfHeal_Infantry_Offset.Read(exINI, GameStrings::AudioVisual, "Pips.SelfHeal.Infantry.Offset");
-	this->Pips_SelfHeal_Units_Offset.Read(exINI, GameStrings::AudioVisual, "Pips.SelfHeal.Units.Offset");
-	this->Pips_SelfHeal_Buildings_Offset.Read(exINI, GameStrings::AudioVisual, "Pips.SelfHeal.Buildings.Offset");
-	this->ToolTip_Background_Color.Read(exINI, GameStrings::AudioVisual, "ToolTip.Background.Color");
-	this->ToolTip_Background_Opacity.Read(exINI, GameStrings::AudioVisual, "ToolTip.Background.Opacity");
-	this->ToolTip_Background_BlurSize.Read(exINI, GameStrings::AudioVisual, "ToolTip.Background.BlurSize");
-	this->RadialIndicatorVisibility.Read(exINI, GameStrings::AudioVisual, "RadialIndicatorVisibility");
-
-	this->AllowParallelAIQueues.Read(exINI, "GlobalControls", "AllowParallelAIQueues");
-	this->ForbidParallelAIQueues_Aircraft.Read(exINI, "GlobalControls", "ForbidParallelAIQueues.Infantry");
-	this->ForbidParallelAIQueues_Building.Read(exINI, "GlobalControls", "ForbidParallelAIQueues.Building");
-	this->ForbidParallelAIQueues_Infantry.Read(exINI, "GlobalControls", "ForbidParallelAIQueues.Infantry");
-	this->ForbidParallelAIQueues_Navy.Read(exINI, "GlobalControls", "ForbidParallelAIQueues.Navy");
-	this->ForbidParallelAIQueues_Vehicle.Read(exINI, "GlobalControls", "ForbidParallelAIQueues.Vehicle");
-
-	this->IronCurtain_KeptOnDeploy.Read(exINI, GameStrings::CombatDamage, "IronCurtain.KeptOnDeploy");
-	this->IronCurtain_EffectOnOrganics.Read(exINI, GameStrings::CombatDamage, "IronCurtain.EffectOnOrganics");
-	this->IronCurtain_KillOrganicsWarhead.Read(exINI, GameStrings::CombatDamage, "IronCurtain.KillOrganicsWarhead");
-
-	this->CrateOnlyOnLand.Read(exINI, GameStrings::CrateRules, "CrateOnlyOnLand");
-
-	this->ROF_RandomDelay.Read(exINI, GameStrings::CombatDamage, "ROF.RandomDelay");
-
-	this->DisplayIncome.Read(exINI, GameStrings::AudioVisual, "DisplayIncome");
-	this->DisplayIncome_Houses.Read(exINI, GameStrings::AudioVisual, "DisplayIncome.Houses");
-	this->DisplayIncome_AllowAI.Read(exINI, GameStrings::AudioVisual, "DisplayIncome.AllowAI");
 
 	// Section AITargetTypes
 	int itemsCount = pINI->GetKeyCount(sectionAITargetTypes);
@@ -180,49 +126,6 @@ void RulesExt::ExtData::Serialize(T& Stm)
 	Stm
 		.Process(this->AITargetTypesLists)
 		.Process(this->AIScriptsLists)
-		.Process(this->HarvesterTypes)
-		.Process(this->Storage_TiberiumIndex)
-		.Process(this->InfantryGainSelfHealCap)
-		.Process(this->UnitsGainSelfHealCap)
-		.Process(this->UseGlobalRadApplicationDelay)
-		.Process(this->RadApplicationDelay_Building)
-		.Process(this->RadWarhead_Detonate)
-		.Process(this->RadHasOwner)
-		.Process(this->RadHasInvoker)
-		.Process(this->JumpjetCrash)
-		.Process(this->JumpjetNoWobbles)
-		.Process(this->MissingCameo)
-		.Process(this->PlacementGrid_Translucency)
-		.Process(this->PlacementPreview)
-		.Process(this->PlacementPreview_Translucency)
-		.Process(this->Pips_Shield)
-		.Process(this->Pips_Shield_Background)
-		.Process(this->Pips_Shield_Building)
-		.Process(this->Pips_Shield_Building_Empty)
-		.Process(this->Pips_SelfHeal_Infantry)
-		.Process(this->Pips_SelfHeal_Units)
-		.Process(this->Pips_SelfHeal_Buildings)
-		.Process(this->Pips_SelfHeal_Infantry_Offset)
-		.Process(this->Pips_SelfHeal_Units_Offset)
-		.Process(this->Pips_SelfHeal_Buildings_Offset)
-		.Process(this->AllowParallelAIQueues)
-		.Process(this->ForbidParallelAIQueues_Aircraft)
-		.Process(this->ForbidParallelAIQueues_Building)
-		.Process(this->ForbidParallelAIQueues_Infantry)
-		.Process(this->ForbidParallelAIQueues_Navy)
-		.Process(this->ForbidParallelAIQueues_Vehicle)
-		.Process(this->IronCurtain_EffectOnOrganics)
-		.Process(this->IronCurtain_KillOrganicsWarhead)
-		.Process(this->IronCurtain_KeptOnDeploy)
-		.Process(this->ROF_RandomDelay)
-		.Process(this->ToolTip_Background_Color)
-		.Process(this->ToolTip_Background_Opacity)
-		.Process(this->ToolTip_Background_BlurSize)
-		.Process(this->DisplayIncome)
-		.Process(this->DisplayIncome_AllowAI)
-		.Process(this->DisplayIncome_Houses)
-		.Process(this->CrateOnlyOnLand)
-		.Process(this->RadialIndicatorVisibility)
 		;
 }
 

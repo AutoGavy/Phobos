@@ -1,8 +1,9 @@
 #include "Body.h"
-#include "../Techno/Body.h"
-#include "../BuildingType/Body.h"
-
-#include <Ext/Scenario/Body.h>
+#include "Ext/Techno/Body.h"
+#include "Ext/BuildingType/Body.h"
+#include "Ext/TechnoType/Body.h"
+#include "Ext/Scenario/Body.h"
+#include "Ext/Rules/Body.h"
 
 template<> const DWORD Extension<ScriptClass>::Canary = 0x3B3B3B3B;
 ScriptExt::ExtContainer ScriptExt::ExtMap;
@@ -1080,6 +1081,10 @@ TechnoClass* ScriptExt::GreatestThreat(TechnoClass *pTechno, int method, int cal
 		auto pTechnoType = pTechno->GetTechnoType();
 
 		if (!object || !objectType || !pTechnoType)
+			continue;
+
+		auto pTechnoTypeExt = TechnoTypeExt::ExtMap.Find(pTechnoType);
+		if (!pTechnoTypeExt || pTechnoTypeExt->VirtualUnit || pTechnoTypeExt->RemoveVolume)
 			continue;
 
 		// Note: the TEAM LEADER is picked for this task, be careful with leadership values in your mod
@@ -2294,6 +2299,10 @@ TechnoClass* ScriptExt::FindBestObject(TechnoClass* pTechno, int method, int cal
 		auto pTechnoType = pTechno->GetTechnoType();
 
 		if (!object || !objectType || !pTechnoType)
+			continue;
+
+		auto pTechnoTypeExt = TechnoTypeExt::ExtMap.Find(pTechnoType);
+		if (!pTechnoTypeExt || pTechnoTypeExt->VirtualUnit || pTechnoTypeExt->RemoveVolume)
 			continue;
 
 		if (enemyHouse && enemyHouse != object->Owner)
