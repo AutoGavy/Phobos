@@ -11,7 +11,8 @@ class BuildingTypeExt
 public:
 	using base_type = BuildingTypeClass;
 
-	class ExtData final : public Extension<BuildingTypeClass>
+	// make an error
+	class ExtData final : public Extension<_BuildingTypeClass>
 	{
 	public:
 		ValueableIdxVector<SuperWeaponTypeClass> SuperWeapons;

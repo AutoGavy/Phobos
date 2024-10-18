@@ -14,19 +14,21 @@ public:
 	{
 	public:
 		PhobosFixedString<0x20> GroupAs;
-		Valueable<int> RadarJamRadius;
-		Valueable<bool> VirtualUnit;
-		Valueable<bool> RemoveVolume;
+		//Valueable<int> RadarJamRadius;
+		//Valueable<bool> VirtualUnit;
+		//Valueable<bool> RemoveVolume;
+		Valueable<bool> SameTargetAsTransporter;
 		Valueable<bool> LowSelectionPriority;
-		Nullable<int> InhibitorRange;
+		//Nullable<int> InhibitorRange;
 
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject)
 			, GroupAs { NONE_STR }
-			, RadarJamRadius { 0 }
-			, VirtualUnit { false }
-			, RemoveVolume { false }
+			//, RadarJamRadius { 0 }
+			//, VirtualUnit { false }
+			//, RemoveVolume { false }
+			, SameTargetAsTransporter { false }
 			, LowSelectionPriority { false }
-			, InhibitorRange {}
+			//, InhibitorRange {}
 		{ }
 
 		virtual ~ExtData() = default;

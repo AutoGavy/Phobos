@@ -2,11 +2,11 @@
 
 #include <LoadOptionsClass.h>
 
-#include <Ext/Rules/Body.h>
-#include <Ext/Script/Body.h>
-#include <Ext/Team/Body.h>
-#include <Ext/Techno/Body.h>
-#include <Ext/TechnoType/Body.h>
+//#include <Ext/Rules/Body.h>
+//#include <Ext/Script/Body.h>
+//#include <Ext/Team/Body.h>
+//#include <Ext/Techno/Body.h>
+//#include <Ext/TechnoType/Body.h>
 #include <utility>
 
 #pragma region Implementation details
@@ -165,11 +165,11 @@ private:
 // Add more class names as you like
 using PhobosTypeRegistry = TypeRegistry<
 	// Ext classes
-	RulesExt,
-	ScriptExt,
-	TeamExt,
-	TechnoExt,
-	TechnoTypeExt
+	//RulesExt,
+	//ScriptExt,
+	//TeamExt,
+	//TechnoExt,
+	//TechnoTypeExt
 >;
 
 DEFINE_HOOK(0x7258D0, AnnounceInvalidPointer, 0x6)

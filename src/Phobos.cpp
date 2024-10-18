@@ -33,44 +33,6 @@ const wchar_t* Phobos::VersionDescription = L"Phobos development build #" _STR(B
 void Phobos::ExeRun()
 {
 	Patch::ApplyStatic();
-
-#ifdef DEBUG
-
-	if (Phobos::DetachFromDebugger())
-	{
-		MessageBoxW(NULL,
-		L"You can now attach a debugger.\n\n"
-
-		L"Press OK to continue YR execution.",
-		L"Debugger Notice", MB_OK);
-	}
-	else
-	{
-		MessageBoxW(NULL,
-		L"You can now attach a debugger.\n\n"
-
-		L"To attach a debugger find the YR process in Process Hacker "
-		L"/ Visual Studio processes window and detach debuggers from it, "
-		L"then you can attach your own debugger. After this you should "
-		L"terminate Syringe.exe because it won't automatically exit when YR is closed.\n\n"
-
-		L"Press OK to continue YR execution.",
-		L"Debugger Notice", MB_OK);
-	}
-
-	if (!Console::Create())
-	{
-		MessageBoxW(NULL,
-		L"Failed to allocate the debug console!",
-		L"Debug Console Notice", MB_OK);
-	}
-
-#endif
-}
-
-void Phobos::ExeTerminate()
-{
-	Console::Release();
 }
 
 // =============================
@@ -91,19 +53,3 @@ DEFINE_HOOK(0x7CD810, ExeRun, 0x9)
 
 	return 0;
 }
-
-void NAKED _ExeTerminate()
-{
-	// Call WinMain
-	SET_REG32(EAX, 0x6BB9A0);
-	CALL(EAX);
-	PUSH_REG(EAX);
-
-	Phobos::ExeTerminate();
-
-	// Jump back
-	POP_REG(EAX);
-	SET_REG32(EBX, 0x7CD8EF);
-	__asm {jmp ebx};
-}
-DEFINE_JUMP(LJMP, 0x7CD8EA, GET_OFFSET(_ExeTerminate));

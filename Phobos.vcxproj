@@ -18,18 +18,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Ext\BuildingType\Body.cpp" />
-    <ClCompile Include="src\Ext\Rules\Body.cpp" />
-    <ClCompile Include="src\Ext\Scenario\Body.cpp" />
-    <ClCompile Include="src\Ext\Scenario\Hooks.Variables.cpp" />
-    <ClCompile Include="src\Ext\Team\Body.cpp" />
     <ClCompile Include="src\Ext\TechnoType\Body.cpp" />
-    <ClCompile Include="src\Ext\Techno\Body.cpp" />
     <ClCompile Include="src\Misc\TextInput.cpp" />
-    <ClCompile Include="src\Ext\Script\Body.cpp" />
-    <ClCompile Include="src\Ext\Script\Hooks.cpp" />
     <ClCompile Include="src\Ext\TechnoType\Hooks.cpp" />
-    <ClCompile Include="src\Ext\Techno\Hooks.Transport.cpp" />
+    <ClCompile Include="src\Ext\TechnoType\Hooks.Transport.cpp" />
     <ClCompile Include="src\Misc\Hooks.Blowfish.cpp" />
     <ClCompile Include="src\Misc\Selection.cpp" />
     <ClCompile Include="src\Utilities\Debug.cpp" />
@@ -40,7 +32,6 @@
     <ClCompile Include="src\Misc\Hooks.PCX.cpp" />
     <ClCompile Include="src\Misc\Hooks.UI.cpp" />
     <ClCompile Include="src\Phobos.CRT.cpp" />
-    <ClCompile Include="src\Phobos.Ext.cpp" />
     <ClCompile Include="src\Utilities\Constructs.cpp" />
     <ClCompile Include="src\Utilities\EnumFunctions.cpp" />
     <ClCompile Include="src\Utilities\GeneralUtils.cpp" />
@@ -49,14 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Commands\NextTeam.h" />
-    <ClInclude Include="src\Ext\BuildingType\Body.h" />
-    <ClInclude Include="src\Ext\Rules\Body.h" />
-    <ClInclude Include="src\Ext\Scenario\Body.h" />
-    <ClInclude Include="src\Ext\Team\Body.h" />
     <ClInclude Include="src\Ext\TechnoType\Body.h" />
-    <ClInclude Include="src\Ext\Techno\Body.h" />
     <ClInclude Include="src\Utilities\Enumerable.h" />
-    <ClInclude Include="src\Ext\Script\Body.h" />
     <ClInclude Include="src\Utilities\Savegame.h" />
     <ClInclude Include="src\Utilities\SavegameDef.h" />
     <ClInclude Include="src\Utilities\Stream.h" />

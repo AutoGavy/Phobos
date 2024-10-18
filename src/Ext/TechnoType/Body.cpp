@@ -26,15 +26,16 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 
 	INI_EX exINI(pINI);
 
-	this->VirtualUnit.Read(exINI, pSection, "VirtualUnit");
-	this->RemoveVolume.Read(exINI, pSection, "RemoveVolume");
+	//this->VirtualUnit.Read(exINI, pSection, "VirtualUnit");
+	//this->RemoveVolume.Read(exINI, pSection, "RemoveVolume");
+	this->SameTargetAsTransporter.Read(exINI, pSection, "SameTargetAsTransporter");
 	this->LowSelectionPriority.Read(exINI, pSection, "LowSelectionPriority");
 
 	// Ares 0.2
-	this->RadarJamRadius.Read(exINI, pSection, "RadarJamRadius");
+	//this->RadarJamRadius.Read(exINI, pSection, "RadarJamRadius");
 
 	// Ares 0.9
-	this->InhibitorRange.Read(exINI, pSection, "InhibitorRange");
+	//this->InhibitorRange.Read(exINI, pSection, "InhibitorRange");
 
 	// Ares 0.A
 	this->GroupAs.Read(pINI, pSection, "GroupAs");
@@ -44,11 +45,12 @@ template <typename T>
 void TechnoTypeExt::ExtData::Serialize(T& Stm)
 {
 	Stm
-		.Process(this->VirtualUnit)
-		.Process(this->RemoveVolume)
+		//.Process(this->VirtualUnit)
+		//.Process(this->RemoveVolume)
+		.Process(this->SameTargetAsTransporter)
 		.Process(this->LowSelectionPriority)
-		.Process(this->RadarJamRadius)
-		.Process(this->InhibitorRange)
+		//.Process(this->RadarJamRadius)
+		//.Process(this->InhibitorRange)
 		.Process(this->GroupAs)
 		;
 }

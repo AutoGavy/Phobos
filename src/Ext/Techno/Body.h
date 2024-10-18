@@ -18,7 +18,8 @@ public:
 	public:
 		bool LastKillWasTeamTarget;
 
-		ExtData(TechnoClass* OwnerObject) : Extension<TechnoClass>(OwnerObject)
+		// make an error with _class
+		ExtData(_TechnoClass* OwnerObject) : Extension<TechnoClass>(OwnerObject)
 			, LastKillWasTeamTarget { false }
 		{ }
 

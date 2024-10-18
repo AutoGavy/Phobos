@@ -19,7 +19,8 @@ class ScenarioExt
 public:
 	using base_type = ScenarioClass;
 
-	class ExtData final : public Extension<ScenarioClass>
+	// make an error with _class
+	class ExtData final : public Extension<_ScenarioClass>
 	{
 	public:
 		std::map<int, CellStruct> Waypoints;

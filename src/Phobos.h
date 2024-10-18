@@ -14,7 +14,6 @@ class Phobos
 {
 public:
 	static void ExeRun();
-	static void ExeTerminate();
 
 	//variables
 	static HANDLE hInstance;
@@ -23,8 +22,4 @@ public:
 	static char readBuffer[readLength];
 	static wchar_t wideBuffer[readLength];
 	static const char readDelims[4];
-
-#ifdef DEBUG
-	static bool DetachFromDebugger();
-#endif
 };

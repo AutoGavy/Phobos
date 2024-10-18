@@ -1,6 +1,8 @@
 #include <FootClass.h>
 #include <Utilities/Macro.h>
 
+#include "Ext/TechnoType/Body.h"
+
 DEFINE_HOOK_AGAIN(0x6FA33C, TechnoClass_ThreatEvals_OpenToppedOwner, 0x6) // TechnoClass::AI
 DEFINE_HOOK_AGAIN(0x6F89F4, TechnoClass_ThreatEvals_OpenToppedOwner, 0x6) // TechnoClass::EvaluateCell
 DEFINE_HOOK_AGAIN(0x6F7EC2, TechnoClass_ThreatEvals_OpenToppedOwner, 0x6) // TechnoClass::EvaluateObject
@@ -28,6 +30,15 @@ DEFINE_HOOK(0x6F8FD7, TechnoClass_ThreatEvals_OpenToppedOwner, 0x5)       // Tec
 		returnAddress = SkipCheckFour;
 	default:
 		return 0;
+	}
+
+	if (auto pTransport = pThis->Transporter)
+	{
+		if (auto const pTypeExt = TechnoTypeExt::ExtMap.Find(pTransport->GetTechnoType()))
+		{
+			if (pTypeExt->SameTargetAsTransporter)
+				return returnAddress;
+		}
 	}
 
 	return 0;
