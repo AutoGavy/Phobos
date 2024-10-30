@@ -140,7 +140,7 @@ public:
 	}
 };
 
-DEFINE_HOOK(0x6D9FF0, Tactical_MakeSelection_FilterSelection, 0)
+DEFINE_HOOK(0x6D9FF0, Tactical_MakeSelection_FilterSelection, 6)
 {
 	GET(TacticalClass*, pThis, ECX);
 	GET_STACK(ExtSelection::callback_type, IsSelectable, 4);

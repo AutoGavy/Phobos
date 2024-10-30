@@ -12,7 +12,7 @@ DEFINE_HOOK(0x6B9D9C, RGB_PCX_Loader, 7)
 		0x6B9EE7u : 0u;
 }
 
-DEFINE_HOOK(0x5535D0, PCX_LoadScreen_Skirmish, 6)
+DEFINE_HOOK(0x5535D0, PCX_LoadScreen_Skirmish, 5)
 {
 	LEA_STACK(char*, name, 0x84);
 
