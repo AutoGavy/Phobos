@@ -29,7 +29,7 @@ void TechnoTypeExt::ExtData::LoadFromINIFile(CCINIClass* const pINI)
 	//this->VirtualUnit.Read(exINI, pSection, "VirtualUnit");
 	//this->RemoveVolume.Read(exINI, pSection, "RemoveVolume");
 	this->SameTargetAsTransporter.Read(exINI, pSection, "SameTargetAsTransporter");
-	this->LowSelectionPriority.Read(exINI, pSection, "LowSelectionPriority");
+	//this->LowSelectionPriority.Read(exINI, pSection, "LowSelectionPriority");
 
 	// Ares 0.2
 	//this->RadarJamRadius.Read(exINI, pSection, "RadarJamRadius");
@@ -48,7 +48,7 @@ void TechnoTypeExt::ExtData::Serialize(T& Stm)
 		//.Process(this->VirtualUnit)
 		//.Process(this->RemoveVolume)
 		.Process(this->SameTargetAsTransporter)
-		.Process(this->LowSelectionPriority)
+		//.Process(this->LowSelectionPriority)
 		//.Process(this->RadarJamRadius)
 		//.Process(this->InhibitorRange)
 		.Process(this->GroupAs)

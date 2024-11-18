@@ -18,7 +18,7 @@ public:
 		//Valueable<bool> VirtualUnit;
 		//Valueable<bool> RemoveVolume;
 		Valueable<bool> SameTargetAsTransporter;
-		Valueable<bool> LowSelectionPriority;
+		//Valueable<bool> LowSelectionPriority;
 		//Nullable<int> InhibitorRange;
 
 		ExtData(TechnoTypeClass* OwnerObject) : Extension<TechnoTypeClass>(OwnerObject)
@@ -27,7 +27,7 @@ public:
 			//, VirtualUnit { false }
 			//, RemoveVolume { false }
 			, SameTargetAsTransporter { false }
-			, LowSelectionPriority { false }
+			//, LowSelectionPriority { false }
 			//, InhibitorRange {}
 		{ }
 
