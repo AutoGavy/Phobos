@@ -51,6 +51,19 @@ std::vector<CellStruct> GeneralUtils::AdjacentCellsInRange(unsigned int range)
 	return result;
 }
 
+int GeneralUtils::CountDigitsInNumber(int number)
+{
+	int digits = 0;
+
+	while (number)
+	{
+		number /= 10;
+		digits++;
+	}
+
+	return digits;
+}
+
 const int GeneralUtils::GetRangedRandomOrSingleValue(PartialVector2D<int> range)
 {
 	return range.X >= range.Y || range.ValueCount < 2 ? range.X : ScenarioClass::Instance->Random.RandomRanged(range.X, range.Y);
